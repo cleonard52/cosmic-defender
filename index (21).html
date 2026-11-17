@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cosmic Defender: Roguelike</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="scanlines"></div>
+  <h1>COSMIC DEFENDER</h1>
+
+  <div id="hud">
+    <div class="hud-stat">SECTOR: <span id="wave-el">1</span></div>
+    <div class="hud-stat">HULL: <span id="hp-el">100</span>/<span id="maxhp-el">100</span></div>
+    <div class="hud-stat shield-text">SHIELD: <span id="shield-el">0</span></div>
+    <div class="hud-stat">SCORE: <span id="score-el">0</span></div>
+    <div class="hud-stat scrap-text">SCRAP: <span id="scrap-el">0</span></div>
+    <div class="hud-stat dm-text">DM: <span id="dm-el">0</span></div>
+  </div>
+
+  <div id="game-container">
+    <canvas id="gameCanvas" width="520" height="600"></canvas>
+
+    <!-- START / HANGAR OVERLAY -->
+    <div id="start-overlay" class="overlay">
+      <h2 id="title-text">HANGAR BAY</h2>
+      <p id="subtitle-text">Upgrade systems with Scrap or evolve vessels in the Dark Matter Lab.</p>
+
+      <div class="tab-bar">
+        <button id="tab-scrap-btn" class="tab-btn active">SCRAP BAY</button>
+        <button id="tab-dm-btn" class="tab-btn dm-tab">DARK MATTER LAB</button>
+      </div>
+
+      <!-- SCRAP BAY PANEL -->
+      <div id="panel-scrap" class="meta-shop">
+        <div class="meta-row">
+          <span>Reinforced Hull (+20 Max HP) [Lv. <span id="meta-hp-lv">0</span>]</span>
+          <button id="buy-hp-btn" class="meta-btn">Upgrade (15 Scrap)</button>
+        </div>
+        <div class="meta-row">
+          <span>Plasma Capacitors (+15% Dmg) [Lv. <span id="meta-dmg-lv">0</span>]</span>
+          <button id="buy-dmg-btn" class="meta-btn">Upgrade (20 Scrap)</button>
+        </div>
+        <div class="meta-row">
+          <span>Thruster Boost (+10% Speed) [Lv. <span id="meta-spd-lv">0</span>]</span>
+          <button id="buy-spd-btn" class="meta-btn">Upgrade (15 Scrap)</button>
+        </div>
+        <div class="meta-row">
+          <span>Weapon Overclock (+8% Fire Rate) [Lv. <span id="meta-rof-lv">0</span>]</span>
+          <button id="buy-rof-btn" class="meta-btn">Upgrade (20 Scrap)</button>
+        </div>
+        <div class="meta-row">
+          <span>Weapon Mastery (Ship Trait) [Lv. <span id="meta-mast-lv">0</span>]</span>
+          <button id="buy-mast-btn" class="meta-btn">Upgrade (25 Scrap)</button>
+        </div>
+      </div>
+
+      <!-- DARK MATTER LAB PANEL -->
+      <div id="panel-dm" class="meta-shop dm-panel hidden">
+        <div class="sub-section-title">VESSEL BAY &amp; EVOLUTIONS</div>
+        <div id="ship-list" class="ship-grid"></div>
+
+        <div class="sub-section-title">DARK MATTER PERKS</div>
+        <div class="meta-row">
+          <span>Phoenix Protocol (+1 Revive) [<span id="meta-revive-lv">0</span>/3]</span>
+          <button id="buy-revive-btn" class="meta-btn dm-btn">Upgrade (4 DM)</button>
+        </div>
+        <div class="meta-row">
+          <span>Experimental Headstart (Start Draft) [<span id="meta-headstart-lv">0</span>/1]</span>
+          <button id="buy-headstart-btn" class="meta-btn dm-btn">Upgrade (5 DM)</button>
+        </div>
+        <div class="meta-row">
+          <span>Dark Matter Extractor (+25% DM) [Lv. <span id="meta-extractor-lv">0</span>]</span>
+          <button id="buy-extractor-btn" class="meta-btn dm-btn">Upgrade (3 DM)</button>
+        </div>
+        <div class="meta-row">
+          <span>Scrap Resonance (+20% Scrap) [Lv. <span id="meta-resonance-lv">0</span>]</span>
+          <button id="buy-resonance-btn" class="meta-btn dm-btn">Upgrade (3 DM)</button>
+        </div>
+      </div>
+
+      <!-- DIMENSIONAL PRESTIGE BAR -->
+      <div class="prestige-bar">
+        <div class="prestige-info">
+          <span>Best Sector: <strong id="best-wave-el">0</strong> | Prestige Rank: <strong id="prestige-rank-el">0</strong></span>
+          <small id="prestige-hint">Reach Sector 15 to unlock Dimensional Prestige (300 Scrap = +1 DM)</small>
+        </div>
+        <button id="prestige-btn" class="prestige-btn" disabled>PRESTIGE (+0 DM)</button>
+      </div>
+
+      <button id="start-btn" class="launch-btn">LAUNCH MISSION</button>
+    </div>
+
+    <!-- DRAFT OVERLAY -->
+    <div id="draft-overlay" class="overlay hidden">
+      <h2>SECTOR CLEARED</h2>
+      <p>Choose an experimental system upgrade:</p>
+      <div id="card-container" class="card-grid"></div>
+    </div>
+  </div>
+
+  <div id="instructions">Move: WASD / Arrow Keys | Auto-Fire Active | Defeat Bosses Every 5 Sectors</div>
+
+  <script src="data.js"></script>
+  <script src="entities.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
